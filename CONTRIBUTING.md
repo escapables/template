@@ -15,17 +15,17 @@ Thank you for your interest in contributing! This guide covers how to contribute
 1. Fork and clone the repository:
 ```bash
 git clone <repo-url>
-cd ordning
+cd <project-name>
 ```
 
 2. Build the project:
 ```bash
-make build
+# adapt: replace with project build command
 ```
 
 3. Run tests:
 ```bash
-make test
+# adapt: replace with project test command
 ```
 
 4. Make your changes and test locally.
@@ -75,14 +75,7 @@ git push origin feature/my-feature
 Run these before pushing:
 
 ```bash
-# Full check
-make check
-
-# Individual gates
-make build
-make test
-make lint
-make fmt-check
+# adapt: replace with project-specific commands
 bin/validate-docs
 ```
 
@@ -98,7 +91,7 @@ bin/validate-docs
 
 If your change affects user-facing behavior:
 
-- Update `README.md` for CLI changes
+- Update `README.md` for user-facing changes
 - Update `docs/PRIMARY_TODO.md` if architecture changes
 - Add/update examples if applicable
 

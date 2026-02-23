@@ -16,7 +16,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 
 - Review code from coding agent
 - Approve or request changes
-- Verify architecture matches `docs/ARCHITECTURE.md`
+- Verify architecture matches `docs/ARCHITECTURE.md` (when it exists)
 - Verify conventions match `docs/STYLE.md`
 - Check `docs/HANDOFF.md` for approval requests after each session
 - Run `bin/validate-docs` for doc health
@@ -25,7 +25,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 
 | Document | Purpose |
 |----------|---------|
-| `docs/ARCHITECTURE.md` | Architecture plan |
 | `docs/PRIMARY_TODO.md` | Primary roadmap |
 | `docs/TODO.md` | Active task checklist |
 | `docs/HANDOFF.md` | Session state + approval requests |
@@ -36,11 +35,11 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 ## Review Checklist
 
 ```bash
-# adapt to project toolchain
+# adapt: replace with project build/test/lint commands
 bin/validate-docs
 ```
 
-- Architecture matches ARCHITECTURE.md
+- Architecture matches design docs
 - HANDOFF.md updated
 - Files <500 LOC
 

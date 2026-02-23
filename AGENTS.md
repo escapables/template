@@ -14,7 +14,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 2. Run `pickup` skill or manually:
    - `docs/HANDOFF.md` — pick up last session
    - `docs/TODO.md` — current task
-   - `docs/ARCHITECTURE.md` — architecture ref
    - `docs/PRIMARY_TODO.md` — implementation roadmap
    - `docs/STYLE.md` — conventions
 3. Run `node scripts/docs-list.mjs` — discover docs, honor `read_when` hints
@@ -25,16 +24,16 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 2. After each item: verify, mark DONE in `docs/TODO.md`
 3. Verify after final item:
    ```bash
-   # adapt to project toolchain
+   # adapt: replace with project build/test/lint commands
    bin/validate-docs
    ```
 4. Update `docs/HANDOFF.md` — summarize all completed work, leave **approval request** for reviewer
 
 ## Rules
 
-- Follow architecture in `docs/ARCHITECTURE.md` and roadmap in `docs/PRIMARY_TODO.md`; flag deviations in HANDOFF.md
+- Follow architecture docs and roadmap in `docs/PRIMARY_TODO.md`; flag deviations in HANDOFF.md
 - Follow `docs/STYLE.md`
-- **Files <500 LOC — hard limit.** `wc -l` before handoff. Over? Extract coherent subset into sibling module (e.g. job polling → `jobs.rs`, render helpers → `render.rs`). Re-export via `mod`; keep public API stable. Don't leave for reviewer.
+- **Files <500 LOC — hard limit.** `wc -l` before handoff. Over? Extract coherent subset into sibling module. Keep public API stable. Don't leave for reviewer.
 - HANDOFF.md <60 lines; replace stale content
 - Do not commit, push, merge, or approve own work — leave approval requests
 - Blocked: document in HANDOFF.md, move to next unblocked task
