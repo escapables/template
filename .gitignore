@@ -1,35 +1,37 @@
-# Build
-/target/
-*.exe
-*.dll
-*.so
-*.dylib
+# Uncomment these lines when using this template in a real project.
 
-# Node
-node_modules/
-dist/
+## Build
+#/target/
+#*.exe
+#*.dll
+#*.so
+#*.dylib
 
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
+## Node
+#node_modules/
+#dist/
 
-# OS
-.DS_Store
-Thumbs.db
+## IDE
+#.idea/
+#.vscode/
+#*.swp
+#*.swo
+#*~
 
-# Test artifacts
-*.profdata
-*.profraw
+## OS
+#.DS_Store
+#Thumbs.db
 
-# Agent config and working docs (local only)
-.agents/
-.claude/
-CLAUDE.md
-AGENTS.md
-docs/PRIMARY_TODO.md
-docs/TODO.md
-docs/WORKFLOW.md
-docs/HANDOFF.md
+## Test artifacts
+#*.profdata
+#*.profraw
+
+## Agent config and working docs (local only)
+#.agents/
+#.claude/
+#CLAUDE.md
+#AGENTS.md
+#docs/PRIMARY_TODO.md
+#docs/TODO.md
+#docs/WORKFLOW.md
+#docs/HANDOFF.md

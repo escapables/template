@@ -37,9 +37,21 @@ description: Load global agent guardrails and work conventions. Use at session s
 - Unsure: read more code; if still stuck, ask with short options
 - Unrecognized changes: assume other agent; keep going; focus your changes
 
+## Hooks
+
+Active hooks in `.claude/settings.local.json` — these fire automatically:
+
+| Hook | Trigger | Effect |
+|------|---------|--------|
+| `block-protected-files.sh` | PreToolUse (`Edit\|Write`) | Blocks edits to lock files, generated paths, build output |
+| `block-push.sh` | PreToolUse (`Bash(git push)`) | Blocks `git push` — requires explicit user approval |
+
 ## Skills
 
 - `/pickup` — context rehydration
+- `/handoff` — review verdict + issue next directives
+- `/receive` — receive and review coding agent deliverables
+- `/validate` — full verification suite
 - `/fixissue` — end-to-end issue resolution
 - `/committer` — safe git commits
 - `/docs-list` — documentation discovery

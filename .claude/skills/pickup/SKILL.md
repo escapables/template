@@ -5,7 +5,7 @@ description: Rehydrate context when starting work. Use when picking up work, sta
 
 # Pickup
 
-Rehydrate context, read work-order state, determine turn, act.
+Rehydrate context, determine turn, suggest next command.
 
 ## Gather
 
@@ -20,14 +20,9 @@ Rehydrate context, read work-order state, determine turn, act.
 ## Determine Turn
 
 8. **Read HANDOFF.md sections:**
-   - Approval Request present → **reviewer's turn**. Coding agent delivered, waiting for review. Proceed to Review phase.
-   - Next Actions with coding directives → **coding agent's turn**. Summarise; you don't execute code.
-   - Ambiguous / stale → flag it. Ask user or run `/handoff` to reset.
-
-## Act
-
-9. **Your turn** → execute first review action: verification suite, code review, verdict. Use `/handoff` to complete cycle.
-10. **Not your turn** → summarise what's waiting. No action beyond summary.
+   - Approval Request present → **reviewer's turn**. Coding agent delivered, waiting for review.
+   - Next Actions with coding directives → **coding agent's turn**.
+   - Ambiguous / stale → flag it. Ask user or suggest `/handoff` to reset.
 
 ## Output
 
@@ -37,6 +32,9 @@ Concise bullets:
 - Failing checks (if any)
 - Current TODO item
 - Whose turn + why
-- Next 2-3 actions
 
-Short. If your turn, execute first action.
+Then suggest the appropriate next command:
+- **Your turn** → suggest `/receive` to begin review.
+- **Not your turn** → summarise what's waiting. No action beyond summary.
+
+Do not execute `/receive` or `/handoff` automatically — wait for user permission.
