@@ -51,6 +51,12 @@ bin/validate-docs
 
 When the user mentions updating `HANDOFF.md`, use the `/handoff` skill.
 
+## Roadmap
+
+Use `/roadmap` to add features to milestones in `docs/PRIMARY_TODO.md`. Examples:
+- `/roadmap v0.4 Language toggle between swedish/english in settings`
+- `/roadmap new v0.6 Plugin System — support for user plugins`
+
 ## Release
 
 When a milestone is complete, use the `/release` skill. If `docs/RELEASING.md` exists, follow its checklist; otherwise the skill has generic steps.
