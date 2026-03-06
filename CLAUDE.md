@@ -12,6 +12,18 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 
 When asked to migrate/import this template into a project, read `SETUP.md` first. It has the full customization checklist for hooks, skills, subagents, and instruction files.
 
+## Project Structure
+
+```
+.claude/skills/       — reviewer skills (pickup, handoff, receive, committer, release, roadmap, sync, docs-list, fixissue, guardrails)
+.claude/settings.json — hooks (auto-format, lock file guard)
+.agents/skills/       — coding agent skills (pickup, handoff, receive)
+.agents/agents/       — coding agent subagents (tdd-guide)
+bin/                  — validate-docs
+scripts/              — docs-list.mjs
+docs/                 — workflow docs (HANDOFF, TODO, PRIMARY_TODO, WORKFLOW, STYLE, README)
+```
+
 ## Session Start
 
 - Read `.gitignore` — reminder which docs are local-only (TODO.md, PRIMARY_TODO.md, WORKFLOW.md are unversioned)
@@ -20,7 +32,6 @@ When asked to migrate/import this template into a project, read `SETUP.md` first
 
 - Review code from coding agent
 - Approve or request changes
-- Verify architecture matches `docs/ARCHITECTURE.md` (when it exists)
 - Verify conventions match `docs/STYLE.md`
 - Check `docs/HANDOFF.md` for approval requests after each session
 - Run `bin/validate-docs` for doc health
@@ -39,31 +50,25 @@ When asked to migrate/import this template into a project, read `SETUP.md` first
 ## Review Checklist
 
 ```bash
-# adapt: replace with project build/test/lint commands
 bin/validate-docs
 ```
 
-- Architecture matches design docs
 - HANDOFF.md updated
 - Files <500 LOC
 
-## Handoff
+## Skills
 
-When the user mentions updating `HANDOFF.md`, use the `/handoff` skill.
-
-## Sync
-
-Use `/sync <target-path>` to propagate template updates to downstream projects. It overwrites shared workflow files (skills, scripts) and shows diffs for customized files (CLAUDE.md, settings).
-
-## Roadmap
-
-Use `/roadmap` to add features to milestones in `docs/PRIMARY_TODO.md`. Examples:
-- `/roadmap v0.4 Language toggle between swedish/english in settings`
-- `/roadmap new v0.6 Plugin System — support for user plugins`
-
-## Release
-
-When a milestone is complete, use the `/release` skill. If `docs/RELEASING.md` exists, follow its checklist; otherwise the skill has generic steps.
+| Skill | When |
+|-------|------|
+| `/pickup` | Session start — rehydrate context |
+| `/receive` | Review coding agent deliverables |
+| `/handoff` | Update docs with verdict + next directives |
+| `/roadmap` | Add features to milestones: `/roadmap v0.4 feature description` |
+| `/release` | Full release checklist (gate, changelog, tag, push) |
+| `/sync` | Propagate template updates to downstream projects: `/sync ~/projects/target` |
+| `/committer` | Safe git commit |
+| `/docs-list` | Discover project documentation |
+| `/fixissue` | End-to-end issue resolution |
 
 ## Commit & Push
 
