@@ -50,4 +50,6 @@ When asked to migrate/import this template into a project, read `SETUP.md` first
 | `pickup` | skill | Session start — rehydrate context |
 | `handoff` | skill | Wrap up session, prepare approval request |
 | `receive` | skill | Review incoming directives from reviewer |
+| `docs-list` | skill | Discover project docs, honor `read_when` hints |
+| `fixissue` | skill | End-to-end bug fix with tests and handoff |
 | `tdd-guide` | subagent | Delegate test planning before implementation |
