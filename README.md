@@ -45,7 +45,7 @@ The template provides the handoff contract, doc infrastructure, skills, hooks, a
 | Type | Location | What |
 |------|----------|------|
 | **Hooks** | `.claude/settings.json` | Auto-format on edit (Python/Go/Rust/JS/TS), lock file guard |
-| **Skills** | `.claude/skills/` | pickup, handoff, receive, committer, release, docs-list, fixissue, guardrails |
+| **Skills** | `.claude/skills/` | pickup, handoff, receive, committer, release, roadmap, docs-list, fixissue, guardrails |
 | **Skills** | `.agents/skills/` | pickup, handoff, receive |
 | **Subagents** | `.agents/agents/` | tdd-guide (test-driven development enforcer) |
 
@@ -71,6 +71,17 @@ update HANDOFF.md               approve or deny
                                   ↓
                                 /release (when milestone done)
 ```
+
+### Planning Shortcuts
+
+Add features to milestones without manual doc editing:
+
+```
+/roadmap v0.4 Language toggle between swedish/english in settings
+/roadmap new v0.6 Plugin System — support for user plugins
+```
+
+This appends a properly formatted row to the milestone table in `docs/PRIMARY_TODO.md`.
 
 ## License
 
