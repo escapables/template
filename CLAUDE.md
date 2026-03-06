@@ -8,6 +8,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 
 - `AGENTS.md` — coding agent instructions, not yours
 
+## Template Migration
+
+When asked to migrate/import this template into a project, read `SETUP.md` first. It has the full customization checklist for hooks, skills, subagents, and instruction files.
+
 ## Session Start
 
 - Read `.gitignore` — reminder which docs are local-only (TODO.md, PRIMARY_TODO.md, WORKFLOW.md are unversioned)
@@ -46,6 +50,10 @@ bin/validate-docs
 ## Handoff
 
 When the user mentions updating `HANDOFF.md`, use the `/handoff` skill.
+
+## Release
+
+When a milestone is complete, use the `/release` skill. If `docs/RELEASING.md` exists, follow its checklist; otherwise the skill has generic steps.
 
 ## Commit & Push
 

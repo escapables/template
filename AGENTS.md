@@ -8,6 +8,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 
 - `CLAUDE.md` or `.claude` dir — reviewer instructions, not yours
 
+## Template Migration
+
+When asked to migrate/import this template into a project, read `SETUP.md` first. It has the full customization checklist for hooks, skills, subagents, and instruction files.
+
 ## Session Start
 
 1. Read `.gitignore` — reminder which docs are local-only (TODO.md, PRIMARY_TODO.md, WORKFLOW.md are unversioned)
@@ -39,6 +43,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens
 - Blocked: document in HANDOFF.md, move to next unblocked task
 - Bugs: add regression test
 - Fix root cause, not band-aid
+
+## Subagents
+
+- `tdd-guide` — enforces test-driven development; delegate test planning before implementation
 
 ## Skills
 

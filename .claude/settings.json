@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "for f in $(echo \"$CLAUDE_FILE_PATHS\" | tr ',' '\\n'); do case \"$f\" in *.py) ruff format --quiet \"$f\" 2>/dev/null; ruff check --fix --quiet \"$f\" 2>/dev/null;; *.go) gofmt -w \"$f\" 2>/dev/null; goimports -w \"$f\" 2>/dev/null;; *.rs) rustfmt \"$f\" 2>/dev/null;; *.js|*.ts|*.jsx|*.tsx|*.json|*.css|*.html) npx --yes prettier --write \"$f\" 2>/dev/null;; esac; done; true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$CLAUDE_FILE_PATHS\" | grep -qE '(\\.lock|lock\\.json|egg-info|node_modules|vendor/)' && echo 'BLOCK: do not edit generated/lock/vendor files' && exit 1 || true"
+          }
+        ]
+      }
+    ]
+  }
+}
