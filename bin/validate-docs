@@ -28,6 +28,7 @@ TODO_MAX_LINES = 60
 PRIMARY_TODO_MAX_LINES = 70
 STRICT_FRONT_MATTER = os.environ.get("STRICT_DOCS_FRONT_MATTER", "0") == "1"
 DONE_VERSION_HEADING = re.compile(r"^##\s+DONE\s+v")
+STEP_TABLE_PATTERN = re.compile(r"\|\s*Step\s*\|", re.IGNORECASE)
 
 
 def _iter_docs_markdown() -> list[Path]:
@@ -76,14 +77,7 @@ def _extract_read_when(front_matter: str) -> list[str]:
             if hint:
                 hints.append(hint)
 
-    deduped: list[str] = []
-    seen: set[str] = set()
-    for hint in hints:
-        if hint in seen:
-            continue
-        seen.add(hint)
-        deduped.append(hint)
-    return deduped
+    return list(dict.fromkeys(hints))
 
 
 def _has_heading(body: str) -> bool:
@@ -98,10 +92,9 @@ def _has_heading(body: str) -> bool:
     return False
 
 
-def _validate_doc(path: Path) -> tuple[list[str], list[str]]:
+def _validate_doc(content: str) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
-    content = path.read_text(encoding="utf-8")
     if not content.strip():
         return ["empty file"], warnings
 
@@ -157,9 +150,8 @@ def _validate_docs_index(files: list[Path]) -> list[str]:
     return errors
 
 
-def _validate_todo_format(path: Path) -> list[str]:
+def _validate_todo_format(content: str) -> list[str]:
     errors: list[str] = []
-    content = path.read_text(encoding="utf-8")
     _, body = _split_front_matter(content)
     lines = body.splitlines()
 
@@ -269,9 +261,8 @@ def _validate_todo_format(path: Path) -> list[str]:
     return errors
 
 
-def _validate_roadmap_format(path: Path, label: str, heading: str) -> list[str]:
+def _validate_roadmap_format(content: str, label: str, heading: str) -> list[str]:
     errors: list[str] = []
-    content = path.read_text(encoding="utf-8")
     _, body = _split_front_matter(content)
     lines = body.splitlines()
 
@@ -295,9 +286,8 @@ def _validate_roadmap_format(path: Path, label: str, heading: str) -> list[str]:
     if not versions:
         errors.append(f"{label} requires at least one version heading (## vX.X)")
 
-    step_table_pattern = re.compile(r"\|\s*Step\s*\|", re.IGNORECASE)
     for idx, line in enumerate(lines):
-        if step_table_pattern.search(line):
+        if STEP_TABLE_PATTERN.search(line):
             errors.append(
                 f"{label} line {idx + 1}: table must not contain a Step column (use TODO.md for steps)"
             )
@@ -306,26 +296,16 @@ def _validate_roadmap_format(path: Path, label: str, heading: str) -> list[str]:
     return errors
 
 
-def _validate_todo_loc(path: Path) -> list[str]:
-    content = path.read_text(encoding="utf-8")
+def _validate_line_count(content: str, max_lines: int, label: str, advice: str) -> list[str]:
     line_count = len(content.splitlines())
-    if line_count > TODO_MAX_LINES:
-        return [f"TODO.md exceeds {TODO_MAX_LINES} lines ({line_count}); remove finished milestones"]
+    if line_count > max_lines:
+        return [f"{label} exceeds {max_lines} lines ({line_count}); {advice}"]
     return []
 
 
-def _validate_handoff_loc(path: Path) -> list[str]:
-    content = path.read_text(encoding="utf-8")
-    line_count = len(content.splitlines())
-    if line_count > HANDOFF_MAX_LINES:
-        return [f"HANDOFF.md exceeds {HANDOFF_MAX_LINES} lines ({line_count}); trim stale content"]
-    return []
-
-
-def _validate_primary_todo_loc(path: Path) -> tuple[list[str], list[str]]:
+def _validate_primary_todo_loc(content: str) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
-    content = path.read_text(encoding="utf-8")
     lines = content.splitlines()
     line_count = len(lines)
     if line_count <= PRIMARY_TODO_MAX_LINES:
@@ -361,19 +341,20 @@ def main() -> int:
     print("[docs] validating markdown")
     for path in docs_files:
         rel = path.relative_to(DOCS_DIR).as_posix()
-        errors, warnings = _validate_doc(path)
+        content = path.read_text(encoding="utf-8")
+        errors, warnings = _validate_doc(content)
         if path == TODO_PATH:
-            errors.extend(_validate_todo_format(path))
-            errors.extend(_validate_todo_loc(path))
+            errors.extend(_validate_todo_format(content))
+            errors.extend(_validate_line_count(content, TODO_MAX_LINES, "TODO.md", "remove finished milestones"))
         if path == HANDOFF_PATH:
-            errors.extend(_validate_handoff_loc(path))
+            errors.extend(_validate_line_count(content, HANDOFF_MAX_LINES, "HANDOFF.md", "trim stale content"))
         if path == PRIMARY_TODO_PATH:
-            errors.extend(_validate_roadmap_format(path, "PRIMARY_TODO.md", "# Roadmap"))
-            loc_errors, loc_warnings = _validate_primary_todo_loc(path)
+            errors.extend(_validate_roadmap_format(content, "PRIMARY_TODO.md", "# Roadmap"))
+            loc_errors, loc_warnings = _validate_primary_todo_loc(content)
             errors.extend(loc_errors)
             warnings.extend(loc_warnings)
         if path == ARCHIVE_PATH:
-            errors.extend(_validate_roadmap_format(path, "ARCHIVE.md", "# Archived Milestones"))
+            errors.extend(_validate_roadmap_format(content, "ARCHIVE.md", "# Archived Milestones"))
         if errors:
             failed = True
             print(f"  FAIL {rel}: {', '.join(errors)}")
