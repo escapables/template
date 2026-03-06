@@ -45,7 +45,7 @@ The template provides the handoff contract, doc infrastructure, skills, hooks, a
 | Type | Location | What |
 |------|----------|------|
 | **Hooks** | `.claude/settings.json` | Auto-format on edit (Python/Go/Rust/JS/TS), lock file guard |
-| **Skills** | `.claude/skills/` | pickup, handoff, receive, committer, release, roadmap, docs-list, fixissue, guardrails |
+| **Skills** | `.claude/skills/` | pickup, handoff, receive, committer, release, roadmap, sync, docs-list, fixissue, guardrails |
 | **Skills** | `.agents/skills/` | pickup, handoff, receive |
 | **Subagents** | `.agents/agents/` | tdd-guide (test-driven development enforcer) |
 
@@ -82,6 +82,16 @@ Add features to milestones without manual doc editing:
 ```
 
 This appends a properly formatted row to the milestone table in `docs/PRIMARY_TODO.md`.
+
+### Template Sync
+
+Propagate template updates to downstream projects:
+
+```
+/sync ~/projects/my-app
+```
+
+Overwrites shared workflow files (skills, scripts, subagents) and shows diffs for customized files (CLAUDE.md, settings.json) so you can merge selectively.
 
 ## License
 

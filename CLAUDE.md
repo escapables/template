@@ -51,6 +51,10 @@ bin/validate-docs
 
 When the user mentions updating `HANDOFF.md`, use the `/handoff` skill.
 
+## Sync
+
+Use `/sync <target-path>` to propagate template updates to downstream projects. It overwrites shared workflow files (skills, scripts) and shows diffs for customized files (CLAUDE.md, settings).
+
 ## Roadmap
 
 Use `/roadmap` to add features to milestones in `docs/PRIMARY_TODO.md`. Examples:
