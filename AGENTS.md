@@ -28,7 +28,6 @@ When asked to migrate/import this template into a project, read `SETUP.md` first
 2. After each item: verify, mark DONE in `docs/TODO.md`
 3. Verify after final item:
    ```bash
-   # adapt: replace with project build/test/lint commands
    bin/validate-docs
    ```
 4. Update `docs/HANDOFF.md` — summarize all completed work, leave **approval request** for reviewer
@@ -44,13 +43,11 @@ When asked to migrate/import this template into a project, read `SETUP.md` first
 - Bugs: add regression test
 - Fix root cause, not band-aid
 
-## Subagents
+## Skills & Subagents
 
-- `tdd-guide` — enforces test-driven development; delegate test planning before implementation
-
-## Skills
-
-- `pickup` — context rehydration at session start
-- `handoff` — wrap up session and prepare for reviewer
-- `fixissue` — end-to-end issue resolution
-- `docs-list` — documentation discovery
+| Name | Type | When |
+|------|------|------|
+| `pickup` | skill | Session start — rehydrate context |
+| `handoff` | skill | Wrap up session, prepare approval request |
+| `receive` | skill | Review incoming directives from reviewer |
+| `tdd-guide` | subagent | Delegate test planning before implementation |
